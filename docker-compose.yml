@@ -13,7 +13,7 @@ services:
                             ep_embedded_hyperlinks2
                             ep_export_authors
                             ep_hash_auth
-    image: cristiancantoro/etherpad-lite:compose
+    image: cristiancantoro/etherpad-lite:compose-1.0
     env_file:
       - .env
     environment:
