@@ -1,0 +1,45 @@
+version: '3.8'
+
+networks:
+  app:
+
+services:
+
+  etherpad:
+    build:
+      context: .
+      args: 
+        - >-
+          ETHERPAD_PLUGINS= ep_adminpads2
+                            ep_autocomp
+                            ep_auth_author
+                            ep_embedded_hyperlinks2
+                            ep_embedmedia
+                            ep_export_authors
+                            ep_hash_auth
+    image: cristiancantoro/etherpad-lite:compose
+    env_file:
+      - .env
+    environment:
+      # -- database
+      - DB_TYPE=postgres
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=etherpad
+      - DB_USER=etherpad
+    ports:
+      - 9001:9001
+    networks:
+      - app
+
+  db:
+    restart: always
+    image: "postgres:10"
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=etherpad
+      - POSTGRES_USER=etherpad
+    networks:
+      - app
+
