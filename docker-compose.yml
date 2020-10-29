@@ -14,7 +14,6 @@ services:
                             ep_autocomp
                             ep_auth_author
                             ep_embedded_hyperlinks2
-                            ep_embedmedia
                             ep_export_authors
                             ep_hash_auth
     image: cristiancantoro/etherpad-lite:compose
