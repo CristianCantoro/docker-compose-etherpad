@@ -14,16 +14,30 @@ ARG ETHERPAD_PLUGINS=
 # other things, assets are minified & compressed).
 ENV NODE_ENV=production
 
-# Copy the configuration file.
-COPY --chown=etherpad:0 ./settings.json.docker /opt/etherpad-lite/settings.json
+# add wait-for-it.sh
+COPY ./wait-for-it/wait-for-it.sh /usr/local/bin/wait-for-it.sh
 
+# set workdir
 WORKDIR /opt/etherpad-lite
 
+# run as non-privileged user
+USER etherpad
+
+# Copy the configuration file.
+COPY --chown=etherpad:0 ./settings.json.docker ./settings.json
+
+# install bcrypt for hashed passwords
 RUN npm install bcrypt
 
 # Bash trick: in the for loop ${ETHERPAD_PLUGINS} is NOT quoted, in order to be
 # able to split at spaces.
-RUN for PLUGIN_NAME in ${ETHERPAD_PLUGINS}; do npm install "${PLUGIN_NAME}" || exit 1; done
+RUN for PLUGIN_NAME in ${ETHERPAD_PLUGINS}; \
+      do npm install "${PLUGIN_NAME}" || exit 1; \
+    done
+
 
 EXPOSE 9001
-CMD ["node", "--experimental-worker", "node_modules/ep_etherpad-lite/node/server.js"]
+CMD ["/usr/local/bin/wait-for-it.sh", "${DB_HOST}:${DB_PORT}", "-t", "1", \
+     "--", \
+     "node", "--experimental-worker", \
+     "node_modules/ep_etherpad-lite/node/server.js"]
