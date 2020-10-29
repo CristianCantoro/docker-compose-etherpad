@@ -1,8 +1,5 @@
 version: '3.8'
 
-networks:
-  app:
-
 services:
 
   etherpad:
@@ -26,10 +23,14 @@ services:
       - DB_PORT=5432
       - DB_NAME=etherpad
       - DB_USER=etherpad
+    depends_on:
+      - db
     ports:
       - 9001:9001
     networks:
-      - app
+      - etherpad-net
+    restart:
+        on-failure
 
   db:
     restart: always
@@ -40,5 +41,13 @@ services:
       - POSTGRES_DB=etherpad
       - POSTGRES_USER=etherpad
     networks:
-      - app
+      - etherpad-net
+    volumes:
+      - etherpad-data:/var/lib/postgresql/data
 
+
+networks:
+  etherpad-net:
+
+volumes:
+  etherpad-data:
