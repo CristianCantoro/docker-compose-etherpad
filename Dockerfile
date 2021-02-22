@@ -24,7 +24,7 @@ WORKDIR /opt/etherpad-lite
 USER etherpad
 
 # Copy the configuration file.
-COPY --chown=etherpad:0 ./settings.json.docker ./settings.json
+COPY --chown=etherpad:0 ./settings.json ./settings.json
 
 # install bcrypt for hashed passwords
 RUN npm install bcrypt
