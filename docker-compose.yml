@@ -18,7 +18,7 @@ services:
     env_file:
       - .env
     environment:
-      # -- database
+      # database
       - DB_TYPE=postgres
       - DB_HOST=db
       - DB_PORT=5432
@@ -31,10 +31,9 @@ services:
     networks:
       - etherpad-net
     restart:
-        on-failure
+        always
 
   db:
-    restart: always
     image: "postgres:10"
     env_file:
       - .env
@@ -45,6 +44,7 @@ services:
       - etherpad-net
     volumes:
       - etherpad-data:/var/lib/postgresql/data
+    restart: always
 
 
 networks:
