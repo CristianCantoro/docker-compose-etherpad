@@ -24,6 +24,8 @@ services:
       - DB_PORT=5432
       - DB_NAME=etherpad
       - DB_USER=etherpad
+      # abiword
+      - ABIWORD=/usr/bin/abiword
     depends_on:
       - db
     ports:

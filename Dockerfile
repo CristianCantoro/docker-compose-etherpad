@@ -1,6 +1,21 @@
 FROM etherpad/etherpad:1.8.13
 LABEL maintainer="Cristian Consonni <cristian@balist.es>"
 
+USER root
+
+# upgrade system
+RUN apt-get update -y && apt-get upgrade -y
+
+# install abiword
+RUN apt-get install -y abiword='3.0.2-8'
+
+# cleanup system
+RUN apt-get autoremove -y && apt-get autoclean -y
+RUN rm -rf /var/lib/apt/lists/* && rm -rf /etc/apt/sources.list.d/*
+
+# run as non-privileged user
+USER etherpad
+
 # plugins to install while building the container. By default no plugins are
 # installed.
 # If given a value, it has to be a space-separated, quoted list of plugin names.
@@ -19,9 +34,6 @@ COPY ./wait-for-it/wait-for-it.sh /usr/local/bin/wait-for-it.sh
 
 # set workdir
 WORKDIR /opt/etherpad-lite
-
-# run as non-privileged user
-USER etherpad
 
 # Copy the configuration file.
 COPY --chown=etherpad:0 ./settings.json ./settings.json
