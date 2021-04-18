@@ -1,4 +1,4 @@
-FROM etherpad/etherpad:1.8.6
+FROM etherpad/etherpad:1.8.13
 LABEL maintainer="Cristian Consonni <cristian@balist.es>"
 
 # plugins to install while building the container. By default no plugins are
