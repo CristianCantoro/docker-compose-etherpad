@@ -3,6 +3,9 @@ LABEL maintainer="Cristian Consonni <cristian@balist.es>"
 
 USER root
 
+# set DEBIAN_FRONTEND to noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
+
 # upgrade system
 RUN apt-get update -y && apt-get upgrade -y
 
