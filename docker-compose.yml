@@ -38,8 +38,11 @@ services:
     env_file:
       - .env
     environment:
+      # Set multiple env variables pointing to the same value
+      #   https://stackoverflow.com/a/38744886/2377454
       - POSTGRES_DB=etherpad
       - POSTGRES_USER=etherpad
+      - POSTGRES_PASSWORD="${DB_PASS}"
     networks:
       - etherpad-net
     volumes:
