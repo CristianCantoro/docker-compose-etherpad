@@ -1,0 +1,65 @@
+services:
+  pad:
+    user: "0:0"
+    image: cristiancantoro/etherpad-lite:compose-dev-2.2
+    build:
+      context: etherpad-lite
+      target: production
+      dockerfile: ../Dockerfile
+      additional_contexts:
+        - settings=settings
+      args:
+        ETHERPAD_PLUGINS: >
+          ep_adminpads2@2.1.110
+          ep_align@0.3.97
+          ep_announce@0.0.28
+          ep_author_hover@1.0.1
+          ep_comments_page@1.0.38
+          ep_disable_imports@1.0.9
+          ep_disable_reset_authorship_colours@0.0.25
+          ep_ether-o-meter@0.0.11
+          ep_export_authors@0.1.1
+          ep_hash_auth@3.0.20
+          ep_headings2@0.2.65
+          ep_httpauth_author@0.0.3
+          ep_image_insert@1.0.7
+          ep_message_all@2.0.1
+        INSTALL_ABIWORD: true
+    volumes:
+      # mount local volume
+      # https://stackoverflow.com/a/48442262/2377454
+      - ./settings/settings.dev.json.docker:/opt/etherpad-lite/settings.json
+      - plugins:/opt/etherpad-lite/src/plugin_packages
+      - etherpad-var:/opt/etherpad-lite/var
+    depends_on:
+      - postgres
+    env_file:
+      - path: ./default.env
+        required: true # default
+      - path: ./override.env
+        required: false
+    restart: always
+    ports:
+      - "${DOCKER_COMPOSE_APP_PORT_PUBLISHED:-9001}:${DOCKER_COMPOSE_APP_PORT_TARGET:-9001}"
+    tty: true
+    stdin_open: true
+
+  postgres:
+    image: postgres:15-alpine
+    env_file:
+      - path: ./default.env
+        required: true # default
+      - path: ./override.env
+        required: false
+    restart: always
+    # Exposing the port is not needed unless you want to access this database instance from the host.
+    # Be careful when other postgres docker container are running on the same port
+    # ports:
+    #   - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/pgdata
+
+volumes:
+  postgres_data:
+  plugins:
+  etherpad-var:
