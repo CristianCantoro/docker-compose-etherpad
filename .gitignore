@@ -1,2 +1,2 @@
-# ignore .env file with secrets
-.env
+# ignore override.env file with secrets
+override.env
