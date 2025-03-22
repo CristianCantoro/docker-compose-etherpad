@@ -1,8 +1,8 @@
 # An etherpad instance deployed with docker compose
 
-This is a `docker-compose` configuration for Etherpad. It builds on the existing `Dockerfile` that can be found at [etherpad-lite](https://github.com/ether/etherpad-lite).
+This is a `docker-compose` file for Etherpad. It builds on the existing [`Dockerfile`](https://github.com/ether/etherpad-lite/blob/2.2.7/docker-compose.yml) that can be found at [etherpad-lite](https://github.com/ether/etherpad-lite).
 
-This will start up a PostgreSQL container and an Etherpad container configured to use Postgres, listening on port 9001. SSL is left unconfigured, with the intention of putting this behind Apache or nginx.
+This compose file will start up two containers: a PostgreSQL container and an Etherpad container configured to use Postgres, listening on port 9001. SSL is left unconfigured, with the intention of putting this behind Apache or nginx.
 
 ## Customising
 
