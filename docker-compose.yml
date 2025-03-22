@@ -1,7 +1,7 @@
 services:
   pad:
     user: "0:0"
-    image: cristiancantoro/etherpad:2.2
+    image: cristiancantoro/etherpad-lite:compose-2.2
     build:
       context: etherpad-lite
       target: production
