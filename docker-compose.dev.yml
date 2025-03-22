@@ -38,6 +38,8 @@ services:
         required: true # default
       - path: ./override.env
         required: false
+    environment:
+      ABIWORD: "/usr/bin/abiword"
     restart: always
     ports:
       - "${DOCKER_COMPOSE_APP_PORT_PUBLISHED:-9001}:${DOCKER_COMPOSE_APP_PORT_TARGET:-9001}"
