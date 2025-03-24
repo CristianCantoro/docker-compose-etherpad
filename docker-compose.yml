@@ -16,14 +16,18 @@ services:
           ep_announce@0.0.28
           ep_author_hover@1.0.1
           ep_comments_page@1.0.38
+          ep_disable_delete_button@0.0.1
           ep_disable_imports@1.0.9
           ep_disable_reset_authorship_colours@0.0.25
+          ep_embedded_hyperlinks2@1.2.4
           ep_ether-o-meter@0.0.11
+          ep_etherpad-lite@2.2.7
           ep_export_authors@0.1.1
+          ep_font_color@0.0.88
           ep_hash_auth@3.0.20
           ep_headings2@0.2.65
           ep_httpauth_author@0.0.3
-          ep_image_insert@1.0.7
+          ep_image_upload@1.0.105
           ep_message_all@2.0.1
         INSTALL_ABIWORD: true
     volumes:
